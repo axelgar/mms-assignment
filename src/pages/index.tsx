@@ -1,22 +1,24 @@
-import { gql } from "@apollo/client";
 import createApolloClient from "@/apollo-client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { GetServerSidePropsContext } from "next";
-import { Button } from "@/atoms";
-import { Pagination } from "@/components";
+import { Page, Pagination } from "@/components";
+import { COUNT_ISSUES, SEARCH_ISSUES_QUERY } from "@/api/queries";
+import { IssuesList } from "@/components";
 
-export default function IssuesPage({ issues, keyword, pageInfo }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function IssuesPage(props: any) {
+  const { issues, keyword, pageInfo, openIssues, closedIssues } = props;
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState(keyword);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/?keyword=${searchTerm}`);
   };
 
   return (
-    <div>
+    <Page>
       <form onSubmit={handleSearch}>
         <input
           type="text"
@@ -28,59 +30,32 @@ export default function IssuesPage({ issues, keyword, pageInfo }) {
       </form>
 
       <h1>Search Results for &quot;{keyword}&quot;</h1>
-      <ul>
+
+      {issues.length ? (
+        <IssuesList
+          issues={issues}
+          openIssues={openIssues}
+          closedIssues={closedIssues}
+        />
+      ) : (
+        <></>
+      )}
+
+      {/* <ul>
         {issues?.map((issue) => (
           <li key={issue.node.number}>
             <a href={issue.node.url} target="_blank" rel="noopener noreferrer">
               {issue.node.title}
             </a>
-            {/* <p>{issue.node.body}</p> */}
+            <p>{issue.node.body}</p>
           </li>
         ))}
-      </ul>
+      </ul> */}
 
       <Pagination keyword={keyword} pageInfo={pageInfo} />
-    </div>
+    </Page>
   );
 }
-
-export const SEARCH_ISSUES_QUERY = gql`
-  query SearchIssues(
-    $queryString: String!
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-  ) {
-    search(
-      query: $queryString
-      type: ISSUE
-      first: $first
-      after: $after
-      last: $last
-      before: $before
-    ) {
-      issueCount
-      edges {
-        node {
-          ... on Issue {
-            title
-            body
-            url
-            number
-            createdAt
-          }
-        }
-      }
-      pageInfo {
-        startCursor
-        hasPreviousPage
-        endCursor
-        hasNextPage
-      }
-    }
-  }
-`;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { query } = context;
@@ -104,11 +79,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       variables,
     });
 
+    const { data: countClosedIssues } = await client.query({
+      query: COUNT_ISSUES,
+      variables: { queryString: "repo:facebook/react is:issue is:closed" },
+    });
+    const { data: countOpenIssues } = await client.query({
+      query: COUNT_ISSUES,
+      variables: { queryString: "repo:facebook/react is:issue is:open" },
+    });
+
     return {
       props: {
         issues: data.search.edges,
         keyword,
         pageInfo: data.search.pageInfo,
+        openIssues: countOpenIssues.search.issueCount,
+        closedIssues: countClosedIssues.search.issueCount,
       },
     };
   } catch (error) {

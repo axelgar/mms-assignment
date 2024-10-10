@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const S = {
-  Button: styled.button`
+  A: styled.a`
     color: rgb(71, 139, 230);
     min-width: 32px;
     padding: 5px 10px;

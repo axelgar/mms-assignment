@@ -1,4 +1,4 @@
-import { Button } from "@/atoms";
+import { ButtonLink } from "@/atoms";
 import { S } from "./styled";
 import { PageInfo } from "@/types";
 
@@ -10,21 +10,21 @@ type Props = {
 export const Pagination = (props: Props) => {
   const { keyword, pageInfo } = props;
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = pageInfo;
-  console.log({ hasNextPage, hasPreviousPage });
+
   return (
     <S.Container>
-      <Button
+      <ButtonLink
         href={`/?keyword=${keyword}&before=${startCursor}`}
         disabled={!hasPreviousPage}
       >
         ← Previous
-      </Button>
-      <Button
+      </ButtonLink>
+      <ButtonLink
         href={`/?keyword=${keyword}&after=${endCursor}`}
         disabled={!hasNextPage}
       >
         Next →
-      </Button>
+      </ButtonLink>
     </S.Container>
   );
 };

@@ -5,7 +5,7 @@ const createApolloClient = () => {
     uri: "https://api.github.com/graphql",
     cache: new InMemoryCache(),
     headers: {
-      Authorization: `bearer ${process.env.GITHUB_API_KEY}`,
+      Authorization: `Bearer ${process.env.GITHUB_API_KEY}`,
     },
   });
 };

@@ -6,5 +6,6 @@ export const S = {
     align-items: center;
     justify-content: center;
     gap: 4px;
+    margin: 16px 0;
   `,
 };
