@@ -3,7 +3,8 @@ import createApolloClient from "@/apollo-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
-import { Button } from "@/components";
+import { Button } from "@/atoms";
+import { Pagination } from "@/components";
 
 export default function IssuesPage({ issues, keyword, pageInfo }) {
   const router = useRouter();
@@ -38,17 +39,7 @@ export default function IssuesPage({ issues, keyword, pageInfo }) {
         ))}
       </ul>
 
-      {/* Pagination controls */}
-      <div>
-        {pageInfo?.hasNextPage && (
-          <Button href={`/?keyword=${keyword}&before=${pageInfo.startCursor}`}>
-            Previous
-          </Button>
-        )}
-        {pageInfo?.hasNextPage && (
-          <a href={`/?keyword=${keyword}&after=${pageInfo.endCursor}`}>Next</a>
-        )}
-      </div>
+      <Pagination keyword={keyword} pageInfo={pageInfo} />
     </div>
   );
 }
