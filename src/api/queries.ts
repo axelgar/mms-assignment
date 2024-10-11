@@ -25,6 +25,7 @@ export const SEARCH_ISSUES_QUERY = gql`
             url
             number
             createdAt
+            state
           }
         }
       }

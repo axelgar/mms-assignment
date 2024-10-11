@@ -17,7 +17,20 @@ export const S = {
     border-bottom: 1px solid rgb(61, 68, 77);
   `,
 
+  FilterButton: styled.button`
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: transparent;
+    border: 1px solid rgb(61, 68, 77);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  `,
+
   Issue: styled.li`
+    display: flex;
+    gap: 8px;
     border-top-color: transparent;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -39,5 +52,13 @@ export const S = {
   IssueTitle: styled.p`
     font-size: 16px;
     font-weight: 600;
+  `,
+
+  IssueDetails: styled.p`
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgb(145, 152, 161);
   `,
 };

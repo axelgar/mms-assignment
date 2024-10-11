@@ -10,7 +10,8 @@ export type Issue = {
     title: string;
     body: string;
     url: string;
-    number: string;
+    number: number;
     createdAt: string;
+    state: "OPEN" | "CLOSED";
   };
 };

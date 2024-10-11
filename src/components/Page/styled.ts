@@ -5,6 +5,7 @@ export const S = {
     max-width: 1280px;
     margin-right: auto;
     margin-left: auto;
+    padding-bottom: 24px;
     padding-left: 24px;
     padding-right: 24px;
   `,
