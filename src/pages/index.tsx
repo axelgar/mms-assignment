@@ -87,8 +87,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   try {
     const variables = {
-      queryString: `repo:facebook/react is:issue ${
-        filter ? `is:${filter}` : ""
+      queryString: `repo:facebook/react is:issue sort:created-desc ${
+        filter && `is:${filter}`
       } ${keyword}`,
       first: after || !before ? 10 : null,
       after: after || null,

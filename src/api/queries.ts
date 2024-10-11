@@ -16,7 +16,6 @@ export const SEARCH_ISSUES_QUERY = gql`
       last: $last
       before: $before
     ) {
-      issueCount
       edges {
         node {
           ... on Issue {
