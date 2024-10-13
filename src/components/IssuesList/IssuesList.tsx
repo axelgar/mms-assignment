@@ -7,7 +7,7 @@ import Link from "next/link";
 
 type Props = {
   filter?: string;
-  issues: Issue[];
+  issues: { node: Issue }[];
   openIssues: number;
   closedIssues: number;
 };
@@ -39,10 +39,10 @@ export const IssuesList = (props: Props) => {
         </S.FilterButton>
       </S.Header>
 
-      <ul style={{ listStyle: "none" }}>
+      <ul>
         {issues.map(({ node }) => (
-          <S.Issue key={node.id}>
-            <Link href={`/issue/${node.id}`}>
+          <S.Issue key={node.number}>
+            <Link href={`/issue/${node.number}`}>
               {node.state === "OPEN" ? <OpenIcon /> : <ClosedIcon />}
               <div>
                 <S.IssueTitle>{node.title}</S.IssueTitle>

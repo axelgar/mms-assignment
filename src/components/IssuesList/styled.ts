@@ -29,8 +29,6 @@ export const S = {
   `,
 
   Issue: styled.li`
-    display: flex;
-    gap: 8px;
     border-top-color: transparent;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -50,6 +48,8 @@ export const S = {
 
     a {
       width: 100%;
+      display: flex;
+      gap: 8px;
     }
   `,
 

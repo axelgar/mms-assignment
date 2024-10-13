@@ -6,13 +6,14 @@ export type PageInfo = {
 };
 
 export type Issue = {
-  node: {
-    id: string;
-    title: string;
-    body: string;
-    url: string;
-    number: number;
-    createdAt: string;
-    state: "OPEN" | "CLOSED";
-  };
+  title: string;
+  body: string;
+  url: string;
+  number: number;
+  createdAt: string;
+  state: "OPEN" | "CLOSED";
+};
+
+export type IssueWithComments = Issue & {
+  comments: { nodes: { id: string; body: string; createdAt: string; author: { login: string; avatarUrl: string } }[] };
 };

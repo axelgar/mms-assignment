@@ -1,8 +1,8 @@
-import createApolloClient from "@/apollo-client";
+import { client } from "@/apollo-client";
 import { FormEvent, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { Page, Pagination } from "@/components";
-import { COUNT_ISSUES, SEARCH_ISSUES_QUERY } from "@/api/queries";
+import { COUNT_ISSUES, SEARCH_ISSUES } from "@/api/queries";
 import { IssuesList } from "@/components";
 import { Input } from "@/atoms";
 import { useUrlUpdater } from "@/hooks";
@@ -16,7 +16,6 @@ export default function IssuesPage(props: any) {
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     updateKeyword(searchTerm);
   };
 
@@ -26,7 +25,7 @@ export default function IssuesPage(props: any) {
         style={{
           fontSize: "24px",
           fontWeight: 600,
-          margin: "24px 0",
+          marginBottom: "24px",
           textAlign: "center",
         }}
       >
@@ -71,8 +70,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const after = query.after || null;
   const before = query.before || null;
 
-  const client = createApolloClient();
-
   try {
     const variables = {
       queryString: `repo:facebook/react is:issue sort:created-desc ${filter && `is:${filter}`} ${keyword}`,
@@ -83,7 +80,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
 
     const { data } = await client.query({
-      query: SEARCH_ISSUES_QUERY,
+      query: SEARCH_ISSUES,
       variables,
     });
 

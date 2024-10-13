@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const KEYS = {
   keyword: "keyword",
   before: "before",
-  after: "keyword",
+  after: "after",
 };
 
 export const useUrlUpdater = () => {
@@ -14,7 +14,7 @@ export const useUrlUpdater = () => {
   const updateKeyword = (value: string) => {
     const url = getUrl();
 
-    url.searchParams.set(KEYS.keyword, value);
+    url.searchParams.set("keyword", value);
     url.searchParams.delete(KEYS.before);
     url.searchParams.delete(KEYS.after);
 
