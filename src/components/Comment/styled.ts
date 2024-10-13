@@ -21,6 +21,8 @@ const Article = styled.article`
 const Header = styled.header`
   padding-bottom: 8px;
   padding-top: 8px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   border-bottom: 1px solid rgb(61, 68, 77);
   background: rgb(38, 44, 54);
   font-weight: 600;
