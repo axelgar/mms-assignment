@@ -13,7 +13,6 @@ const Avatar = styled.img`
 const Article = styled.article`
   border: 1px solid rgb(61, 68, 77);
   border-radius: 6px;
-  padding-top: 8px;
   width: 100%;
   color: rgb(209, 215, 224);
   font-size: 14px;
@@ -21,6 +20,7 @@ const Article = styled.article`
 
 const Header = styled.header`
   padding-bottom: 8px;
+  padding-top: 8px;
   border-bottom: 1px solid rgb(61, 68, 77);
   background: rgb(38, 44, 54);
   font-weight: 600;
