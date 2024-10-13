@@ -32,6 +32,7 @@ const Body = styled.p`
   border-radius: 6px;
   margin-bottom: 24px;
   white-space: pre-wrap;
+  overflow-wrap: break-word;
 `;
 
 export const S = { Body, Header, BackButton, Title, Number };

@@ -41,6 +41,7 @@ const Date = styled.p`
 const Body = styled.p`
   padding: 16px;
   white-space: pre-wrap;
+  overflow-wrap: break-word;
 `;
 
 export const S = { Avatar, Article, AuthorName, Body, Container, Date, Header };
