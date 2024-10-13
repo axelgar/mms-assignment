@@ -11,12 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const start = () => {
-      setLoading(true);
-    };
-    const end = () => {
-      setLoading(false);
-    };
+    const start = () => setLoading(true);
+    const end = () => setLoading(false);
+
     Router.events.on("routeChangeStart", start);
     Router.events.on("routeChangeComplete", end);
     Router.events.on("routeChangeError", end);
@@ -30,7 +27,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       {loading && <Loading />}
-
       <Component {...pageProps} />
     </ThemeProvider>
   );

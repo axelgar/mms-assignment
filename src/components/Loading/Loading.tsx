@@ -1,4 +1,4 @@
-import Spinner from "@/atoms/Spinner/Spinner";
+import { Spinner } from "@/atoms";
 import { S } from "./styled";
 
 export const Loading = () => {

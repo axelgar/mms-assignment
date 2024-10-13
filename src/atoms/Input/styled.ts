@@ -10,7 +10,7 @@ const Input = styled.input`
   background-color: rgb(38, 44, 54);
   border: 1px solid rgb(61, 68, 77);
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
   padding: 5px 12px;
 `;
