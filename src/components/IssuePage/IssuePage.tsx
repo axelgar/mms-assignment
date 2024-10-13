@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { IssueWithComments } from "@/types";
 import { Page } from "../Page";
 import { Comment } from "../Comment";

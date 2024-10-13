@@ -1,5 +1,4 @@
 import { client } from "@/apollo-client";
-
 import { GetServerSidePropsContext } from "next";
 import { IssuesListPage } from "@/components";
 import { COUNT_ISSUES, SEARCH_ISSUES } from "@/api/queries";
@@ -15,6 +14,10 @@ type Props = {
 };
 
 export default function Page(props: Props) {
+  // TODO
+  // if(!props.keyword) {
+  //   return <ErrorPage />
+  // }
   return <IssuesListPage {...props} />;
 }
 
@@ -34,32 +37,33 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       last: before ? 10 : null,
     };
 
-    const { data } = await client.query({
-      query: SEARCH_ISSUES,
-      variables,
-    });
-
-    const { data: countClosedIssues } = await client.query({
-      query: COUNT_ISSUES,
-      variables: { queryString: "repo:facebook/react is:issue is:closed" },
-    });
-    const { data: countOpenIssues } = await client.query({
-      query: COUNT_ISSUES,
-      variables: { queryString: "repo:facebook/react is:issue is:open" },
-    });
+    const [search, countClosedIssues, countOpenIssues] = await Promise.all([
+      await client.query({
+        query: SEARCH_ISSUES,
+        variables,
+      }),
+      await client.query({
+        query: COUNT_ISSUES,
+        variables: { queryString: "repo:facebook/react is:issue is:closed" },
+      }),
+      await client.query({
+        query: COUNT_ISSUES,
+        variables: { queryString: "repo:facebook/react is:issue is:open" },
+      }),
+    ]);
 
     return {
       props: {
-        issues: data.search.edges,
+        issues: search.data.search.edges,
         keyword,
         filter,
-        pageInfo: data.search.pageInfo,
-        openIssues: countOpenIssues.search.issueCount,
-        closedIssues: countClosedIssues.search.issueCount,
+        pageInfo: search.data.search.pageInfo,
+        openIssues: countOpenIssues.data.search.issueCount,
+        closedIssues: countClosedIssues.data.search.issueCount,
       },
     };
   } catch (error) {
-    console.error("Error searching issues:", error);
+    console.error(error);
     return { props: {} };
   }
 }

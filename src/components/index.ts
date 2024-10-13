@@ -5,3 +5,4 @@ export * from "./IssuesListPage";
 export * from "./Search";
 export * from "./Pagination";
 export * from "./IssuesList";
+export * from "./NotFoundPage";
