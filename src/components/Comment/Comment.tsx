@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { IssueWithComments } from "@/types";
 import { S } from "./styled";
 import { formatDistance } from "date-fns";

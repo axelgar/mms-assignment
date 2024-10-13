@@ -14,6 +14,7 @@ export const NotFoundPage = () => {
     <>
       <Head>
         <title>Not found</title>
+        <meta name="description" content="Not found" />
         <meta property="og:title" content="Not found" key="title" />
       </Head>
       <Page>
