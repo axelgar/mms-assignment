@@ -34,13 +34,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   npm run test
   ```
 
-- Run E2E tests:
+- Run E2E tests (make sure you have http://localhost:3000 running):
 
   ```
   npm run e2e
   ```
 
-- Run E2E tests with interactive UI:
+- Run E2E tests with interactive UI (make sure you have http://localhost:3000 running):
 
   ```
   npm run e2e:ui
@@ -109,10 +109,14 @@ const MyComponent = () => {
 };
 ```
 
-## Next/Improvements
+## Next steps/Improvements
 
 - Clear search button: user can clear the search with a cross-like button
 - Improve on components reusability (unify buttons interface and variations): many interactive buttons are repeated across the code-base, we need to catalog them and find reusable patterns to probably add them to the atoms folder
 - Improve error handling and loading feedback
 - Add design tokens for reusable/standardized values
 - Update Eslint rules, missing import orders, return type functions, etc.
+- Review search query behavior => when clear search + cursor pagination
+- Missing to add Husky with lint-staged
+- Abstract the apollo client queries to a "SDK" exposing API like `await searchIssues()` and `await countIssuesByType()`
+- Update Issue details so show more info (e.g. type). Add library to parse markdown maybe?

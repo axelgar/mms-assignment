@@ -18,12 +18,12 @@ describe("IssuesListPage", () => {
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Welcome to the React repo issues tracker! 👋" }),
-    ).toBeDefined();
+    ).toBeInTheDocument();
   });
 
   test("should render not found message when no issues", () => {
     render(<IssuesListPage closedIssues={10} issues={[]} keyword="" openIssues={10} pageInfo={pageInfo} />);
 
-    expect(screen.getByText("No issues found")).toBeDefined();
+    expect(screen.getByText("No issues found")).toBeInTheDocument();
   });
 });

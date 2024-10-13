@@ -14,7 +14,7 @@ export const IssuePage = (props: Props) => {
   const router = useRouter();
 
   const handleOnClick = () => {
-    router.back();
+    router.push("/");
   };
 
   return (

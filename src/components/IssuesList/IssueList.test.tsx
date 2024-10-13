@@ -1,5 +1,5 @@
 import { expect, test, describe, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { IssuesList } from "./IssuesList";
 import { Issue } from "@/types";
 import { setup } from "@/tests/uilts";
@@ -9,29 +9,28 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 vi.mock("next/navigation");
 
 const issues = [
-  {
-    node: { title: "foo", body: "", url: "string", number: 1, createdAt: new Date().toISOString(), state: "OPEN" },
-  },
+  { node: { title: "foo", body: "", url: "string", number: 1, createdAt: new Date().toISOString(), state: "OPEN" } },
 ] as { node: Issue }[];
+
+const renderIssuesList = () => setup(<IssuesList closedIssues={10} issues={issues} openIssues={10} />);
 
 describe("IssuesList", () => {
   test("should render correclty", () => {
-    render(<IssuesList closedIssues={10} issues={issues} openIssues={10} />);
-    expect(screen.getByRole("list")).toBeDefined();
+    renderIssuesList();
+    expect(screen.getByRole("list")).toBeInTheDocument();
   });
 
   test("should render the list of issues", () => {
-    render(<IssuesList closedIssues={10} issues={issues} openIssues={10} />);
+    renderIssuesList();
     expect(screen.getAllByRole("listitem").length).toBe(issues.length);
   });
 
   test("open filter correclty calls router.push to update the filter", async () => {
     const push = vi.fn();
     vi.spyOn(nextRouter, "useRouter").mockImplementation(() => ({ push }) as unknown as AppRouterInstance);
+    const { user } = renderIssuesList();
 
-    const { user } = setup(<IssuesList closedIssues={10} issues={issues} openIssues={10} />);
-
-    await user.click(screen.getByRole("button", { name: `10 Open` }));
+    await user.click(screen.getByRole("button", { name: /10 Open/i }));
 
     expect(push).toHaveBeenCalledWith(`/?filter=open`);
   });
@@ -39,10 +38,9 @@ describe("IssuesList", () => {
   test("closed filter correclty calls router.push to update the filter", async () => {
     const push = vi.fn();
     vi.spyOn(nextRouter, "useRouter").mockImplementation(() => ({ push }) as unknown as AppRouterInstance);
+    const { user } = renderIssuesList();
 
-    const { user } = setup(<IssuesList closedIssues={10} issues={issues} openIssues={10} />);
-
-    await user.click(screen.getByRole("button", { name: `10 Close` }));
+    await user.click(screen.getByRole("button", { name: /10 Close/i }));
 
     expect(push).toHaveBeenCalledWith(`/?filter=closed`);
   });

@@ -12,7 +12,7 @@ const comment = {
 describe("Comment", () => {
   test("should render correclty", () => {
     render(<Comment comment={comment} />);
-    expect(screen.getByRole("img")).toBeDefined();
-    expect(screen.getByText(comment.author.login)).toBeDefined();
+    expect(screen.getByRole("img")).toBeInTheDocument();
+    expect(screen.getByText(comment.author.login)).toBeInTheDocument();
   });
 });
