@@ -17,15 +17,18 @@ export const S = {
     border-bottom: 1px solid rgb(61, 68, 77);
   `,
 
-  FilterButton: styled.button`
+  FilterButton: styled.button<{ $active?: boolean; $type?: string }>`
     display: flex;
     gap: 8px;
     align-items: center;
     background: transparent;
-    border: 1px solid rgb(61, 68, 77);
     padding: 6px 10px;
     border-radius: 6px;
     cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: ${(props) =>
+      props.$active ? (props.$type === "open" ? "rgb(87, 171, 90)" : "rgb(152, 110, 226)") : "rgb(61, 68, 77)"};
   `,
 
   Issue: styled.li`

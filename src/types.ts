@@ -17,3 +17,5 @@ export type Issue = {
 export type IssueWithComments = Issue & {
   comments: { nodes: { id: string; body: string; createdAt: string; author: { login: string; avatarUrl: string } }[] };
 };
+
+export type Filter = "open" | "closed";

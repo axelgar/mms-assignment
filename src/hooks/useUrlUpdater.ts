@@ -1,3 +1,4 @@
+import { Filter } from "@/types";
 import { useRouter } from "next/navigation";
 
 const KEYS = {
@@ -21,7 +22,21 @@ export const useUrlUpdater = () => {
     router.push(`/${url.search}`);
   };
 
+  const updateFilter = (filter: Filter) => {
+    const url = getUrl();
+    const current = url.searchParams.get("filter");
+
+    if (current === filter) {
+      url.searchParams.delete("filter");
+    } else {
+      url.searchParams.set("filter", filter);
+    }
+
+    router.push(`/${url.search}`);
+  };
+
   return {
     updateKeyword,
+    updateFilter,
   };
 };

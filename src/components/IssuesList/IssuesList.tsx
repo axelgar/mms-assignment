@@ -1,9 +1,9 @@
-import { Issue } from "@/types";
+import { Filter, Issue } from "@/types";
 import { S } from "./styled";
 import { formatDistance } from "date-fns";
 import { ClosedIcon, OpenIcon } from "@/atoms";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useUrlUpdater } from "@/hooks";
 
 type Props = {
   filter?: string;
@@ -14,27 +14,17 @@ type Props = {
 
 export const IssuesList = (props: Props) => {
   const { issues, openIssues, closedIssues, filter } = props;
-  const router = useRouter();
+  const { updateFilter } = useUrlUpdater();
 
-  const handleOnFilter = (newFilter: "open" | "closed") => () => {
-    const url = new URL(window.location.href);
-
-    if (newFilter === filter) {
-      url.searchParams.delete("filter");
-    } else {
-      url.searchParams.set("filter", newFilter);
-    }
-
-    router.push(`/${url.search}`);
-  };
+  const handleOnFilter = (newFilter: Filter) => () => updateFilter(newFilter);
 
   return (
     <S.Container>
       <S.Header>
-        <S.FilterButton onClick={handleOnFilter("open")}>
+        <S.FilterButton onClick={handleOnFilter("open")} $active={filter === "open"} $type="open">
           <OpenIcon fill="rgb(145, 152, 161)" /> {openIssues} Open
         </S.FilterButton>
-        <S.FilterButton onClick={handleOnFilter("closed")}>
+        <S.FilterButton onClick={handleOnFilter("closed")} $active={filter === "closed"} $type="closed">
           <ClosedIcon fill="rgb(145, 152, 161)" /> {closedIssues} Close
         </S.FilterButton>
       </S.Header>
