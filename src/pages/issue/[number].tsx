@@ -4,6 +4,7 @@ import { NotFoundPage } from "@/components";
 import { IssuePage } from "@/components/IssuePage";
 import { IssueWithComments } from "@/types";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 type Props = {
   issue: IssueWithComments;
@@ -14,7 +15,16 @@ export default function Page(props: Props) {
     return <NotFoundPage />;
   }
 
-  return <IssuePage {...props} />;
+  return (
+    <>
+      <Head>
+        <title>{props.issue.title}</title>
+        <meta name="description" content={props.issue.body} />
+        <meta property="og:title" content={props.issue.title} key="title" />
+      </Head>
+      <IssuePage {...props} />
+    </>
+  );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

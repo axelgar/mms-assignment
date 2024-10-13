@@ -24,6 +24,7 @@ export const useUrlUpdater = () => {
 
   const updateFilter = (filter: Filter) => {
     const url = getUrl();
+    console.log(url.searchParams);
     const current = url.searchParams.get("filter");
 
     if (current === filter) {

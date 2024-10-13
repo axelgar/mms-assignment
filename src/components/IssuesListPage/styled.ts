@@ -7,4 +7,8 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-export const S = { Title };
+const NotFoundMessage = styled.p`
+  text-align: center;
+`;
+
+export const S = { Title, NotFoundMessage };

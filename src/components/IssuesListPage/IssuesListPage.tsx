@@ -26,10 +26,10 @@ export const IssuesListPage = (props: Props) => {
       {issues.length ? (
         <IssuesList filter={filter} issues={issues} openIssues={openIssues} closedIssues={closedIssues} />
       ) : (
-        <></>
+        <S.NotFoundMessage>No issues found</S.NotFoundMessage>
       )}
 
-      <Pagination keyword={keyword} pageInfo={pageInfo} />
+      <Pagination pageInfo={pageInfo} />
     </Page>
   );
 };

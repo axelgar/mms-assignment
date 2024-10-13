@@ -14,7 +14,7 @@ export const Search = (props: Props) => {
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateKeyword(searchTerm || "");
+    updateKeyword(searchTerm.trim() || "");
   };
 
   return (

@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { IssuesListPage } from "@/components";
 import { COUNT_ISSUES, SEARCH_ISSUES } from "@/api/queries";
 import { Filter, Issue, PageInfo } from "@/types";
+import Head from "next/head";
 
 type Props = {
   keyword: string;
@@ -14,11 +15,19 @@ type Props = {
 };
 
 export default function Page(props: Props) {
-  // TODO
-  // if(!props.keyword) {
-  //   return <ErrorPage />
-  // }
-  return <IssuesListPage {...props} />;
+  return (
+    <>
+      <Head>
+        <title>React repo issues tracker</title>
+        <meta
+          name="description"
+          content="Website to track all issues from GitHub in the React repository from Facebook. Using GraphQL API."
+        />
+        <meta property="og:title" content="React repo issues tracker" key="title" />
+      </Head>
+      <IssuesListPage {...props} />
+    </>
+  );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

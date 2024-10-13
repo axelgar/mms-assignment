@@ -4,7 +4,6 @@ import { PageInfo } from "@/types";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  keyword: string;
   pageInfo: PageInfo;
 };
 
