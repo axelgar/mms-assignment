@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const S = {
-  A: styled.a`
+  Button: styled.button`
     color: rgb(71, 139, 230);
     min-width: 32px;
     padding: 5px 10px;
@@ -16,10 +16,13 @@ export const S = {
       border-color: rgba(61, 68, 77, 1);
     }
 
-    &.isDisabled {
+    &:disabled {
       cursor: default;
       color: rgb(101, 108, 118);
-      pointer-events: none;
+    }
+
+    &:disabled:hover {
+      border-color: transparent;
     }
   `,
 };

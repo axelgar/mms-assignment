@@ -1,6 +1,7 @@
-import { ButtonLink } from "@/atoms";
+import { Button } from "@/atoms";
 import { S } from "./styled";
 import { PageInfo } from "@/types";
+import { useRouter } from "next/navigation";
 
 type Props = {
   keyword: string;
@@ -8,30 +9,32 @@ type Props = {
 };
 
 export const Pagination = (props: Props) => {
-  const { keyword, pageInfo } = props;
+  const { pageInfo } = props;
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = pageInfo;
+  const router = useRouter();
 
-  // TODO refactor ButtonLink component to be a button only use router to navigate with query params
-  //   const handleOnPageClick = (key: "before" | "after") => () => {
-  //     const url = new URL(window.location.href);
-  //     url.searchParams.set("key", key === "after" ? endCursor : startCursor);
-  //     router.push(`/${url.search}`);
-  //   };
+  const handleOnPageClick = (key: "before" | "after") => () => {
+    const url = new URL(window.location.href);
+
+    if (key === "after") {
+      url.searchParams.delete("before");
+      url.searchParams.set(key, endCursor);
+    } else {
+      url.searchParams.delete("after");
+      url.searchParams.set(key, startCursor);
+    }
+
+    router.push(`/${url.search}`);
+  };
 
   return (
     <S.Container>
-      <ButtonLink
-        href={`/?keyword=${keyword}&before=${startCursor}`}
-        disabled={!hasPreviousPage}
-      >
+      <Button onClick={handleOnPageClick("before")} disabled={!hasPreviousPage}>
         ← Previous
-      </ButtonLink>
-      <ButtonLink
-        href={`/?keyword=${keyword}&after=${endCursor}`}
-        disabled={!hasNextPage}
-      >
+      </Button>
+      <Button onClick={handleOnPageClick("after")} disabled={!hasNextPage}>
         Next →
-      </ButtonLink>
+      </Button>
     </S.Container>
   );
 };

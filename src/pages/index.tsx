@@ -1,27 +1,23 @@
 import createApolloClient from "@/apollo-client";
-import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { Page, Pagination } from "@/components";
 import { COUNT_ISSUES, SEARCH_ISSUES_QUERY } from "@/api/queries";
 import { IssuesList } from "@/components";
 import { Input } from "@/atoms";
+import { useUrlUpdater } from "@/hooks";
 
 // TODO fix any type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function IssuesPage(props: any) {
   const { issues, keyword, pageInfo, filter, openIssues, closedIssues } = props;
-  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState(keyword);
+  const { updateKeyword } = useUrlUpdater();
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO abstract all this
-    const url = new URL(window.location.href);
-    url.searchParams.set("keyword", searchTerm);
-    url.searchParams.delete("before");
-    url.searchParams.delete("after");
-    router.push(`/${url.search}`);
+
+    updateKeyword(searchTerm);
   };
 
   return (
@@ -36,10 +32,7 @@ export default function IssuesPage(props: any) {
       >
         Welcome to the React repo issues tracker! 👋
       </h1>
-      <form
-        onSubmit={handleSearch}
-        style={{ display: "flex", gap: "12px", marginBottom: "24px" }}
-      >
+      <form onSubmit={handleSearch} style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
         <Input
           type="text"
           value={searchTerm}
@@ -61,12 +54,7 @@ export default function IssuesPage(props: any) {
       </form>
 
       {issues.length ? (
-        <IssuesList
-          filter={filter}
-          issues={issues}
-          openIssues={openIssues}
-          closedIssues={closedIssues}
-        />
+        <IssuesList filter={filter} issues={issues} openIssues={openIssues} closedIssues={closedIssues} />
       ) : (
         <></>
       )}
@@ -87,13 +75,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   try {
     const variables = {
-      queryString: `repo:facebook/react is:issue sort:created-desc ${
-        filter && `is:${filter}`
-      } ${keyword}`,
+      queryString: `repo:facebook/react is:issue sort:created-desc ${filter && `is:${filter}`} ${keyword}`,
+      after,
       first: after || !before ? 10 : null,
-      after: after || null,
+      before,
       last: before ? 10 : null,
-      before: before || null,
     };
 
     const { data } = await client.query({

@@ -1,21 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const SEARCH_ISSUES_QUERY = gql`
-  query SearchIssues(
-    $queryString: String!
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-  ) {
-    search(
-      query: $queryString
-      type: ISSUE
-      first: $first
-      after: $after
-      last: $last
-      before: $before
-    ) {
+  query SearchIssues($queryString: String!, $first: Int, $after: String, $last: Int, $before: String) {
+    search(query: $queryString, type: ISSUE, first: $first, after: $after, last: $last, before: $before) {
       edges {
         node {
           ... on Issue {
@@ -25,6 +12,7 @@ export const SEARCH_ISSUES_QUERY = gql`
             number
             createdAt
             state
+            id
           }
         }
       }

@@ -3,6 +3,7 @@ import { S } from "./styled";
 import { formatDistance } from "date-fns";
 import { ClosedIcon, OpenIcon } from "@/atoms";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   filter?: string;
@@ -40,17 +41,19 @@ export const IssuesList = (props: Props) => {
 
       <ul style={{ listStyle: "none" }}>
         {issues.map(({ node }) => (
-          <S.Issue key={node.title}>
-            {node.state === "OPEN" ? <OpenIcon /> : <ClosedIcon />}
-            <div>
-              <S.IssueTitle>{node.title}</S.IssueTitle>
-              <S.IssueDetails>
-                # {node.number}{" "}
-                {formatDistance(new Date(node.createdAt), new Date(), {
-                  addSuffix: true,
-                })}
-              </S.IssueDetails>
-            </div>
+          <S.Issue key={node.id}>
+            <Link href={`/issue/${node.id}`}>
+              {node.state === "OPEN" ? <OpenIcon /> : <ClosedIcon />}
+              <div>
+                <S.IssueTitle>{node.title}</S.IssueTitle>
+                <S.IssueDetails>
+                  # {node.number}{" "}
+                  {formatDistance(new Date(node.createdAt), new Date(), {
+                    addSuffix: true,
+                  })}
+                </S.IssueDetails>
+              </div>
+            </Link>
           </S.Issue>
         ))}
       </ul>

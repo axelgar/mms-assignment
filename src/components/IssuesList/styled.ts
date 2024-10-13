@@ -47,6 +47,10 @@ export const S = {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
+
+    a {
+      width: 100%;
+    }
   `,
 
   IssueTitle: styled.p`
