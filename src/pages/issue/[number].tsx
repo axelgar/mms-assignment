@@ -1,7 +1,6 @@
 import { GET_ISSUE_AND_COMMENTS } from "@/api/queries";
 import { client } from "@/apollo-client";
-import { NotFoundPage } from "@/components";
-import { IssuePage } from "@/components/IssuePage";
+import { NotFoundPage, IssuePage } from "@/components";
 import { IssueWithComments } from "@/types";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";

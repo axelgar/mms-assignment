@@ -115,3 +115,4 @@ const MyComponent = () => {
 - Improve on components reusability (unify buttons interface and variations): many interactive buttons are repeated across the code-base, we need to catalog them and find reusable patterns to probably add them to the atoms folder
 - Improve error handling and loading feedback
 - Add design tokens for reusable/standardized values
+- Update Eslint rules, missing import orders, return type functions, etc.

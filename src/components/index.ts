@@ -6,3 +6,4 @@ export * from "./Search";
 export * from "./Pagination";
 export * from "./IssuesList";
 export * from "./NotFoundPage";
+export * from "./Loading";
