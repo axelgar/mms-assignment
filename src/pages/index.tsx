@@ -1,66 +1,21 @@
 import { client } from "@/apollo-client";
-import { FormEvent, useState } from "react";
+
 import { GetServerSidePropsContext } from "next";
-import { Page, Pagination } from "@/components";
+import { IssuesListPage } from "@/components";
 import { COUNT_ISSUES, SEARCH_ISSUES } from "@/api/queries";
-import { IssuesList } from "@/components";
-import { Input } from "@/atoms";
-import { useUrlUpdater } from "@/hooks";
+import { Filter, Issue, PageInfo } from "@/types";
 
-// TODO fix any type
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function IssuesPage(props: any) {
-  const { issues, keyword, pageInfo, filter, openIssues, closedIssues } = props;
-  const [searchTerm, setSearchTerm] = useState(keyword);
-  const { updateKeyword } = useUrlUpdater();
+type Props = {
+  keyword: string;
+  issues: { node: Issue }[];
+  filter?: Filter;
+  openIssues: number;
+  closedIssues: number;
+  pageInfo: PageInfo;
+};
 
-  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    updateKeyword(searchTerm);
-  };
-
-  return (
-    <Page>
-      <h1
-        style={{
-          fontSize: "24px",
-          fontWeight: 600,
-          marginBottom: "24px",
-          textAlign: "center",
-        }}
-      >
-        Welcome to the React repo issues tracker! 👋
-      </h1>
-      <form onSubmit={handleSearch} style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
-        <Input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search issues..."
-        />
-
-        <button
-          style={{
-            background: "transparent",
-            border: "1px solid rgb(61, 68, 77)",
-            padding: "6px 10px",
-            borderRadius: "6px",
-          }}
-          type="submit"
-        >
-          Search
-        </button>
-      </form>
-
-      {issues.length ? (
-        <IssuesList filter={filter} issues={issues} openIssues={openIssues} closedIssues={closedIssues} />
-      ) : (
-        <></>
-      )}
-
-      <Pagination keyword={keyword} pageInfo={pageInfo} />
-    </Page>
-  );
+export default function Page(props: Props) {
+  return <IssuesListPage {...props} />;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
